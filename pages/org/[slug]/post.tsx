@@ -22,6 +22,7 @@ type OrgPostProps = {
   name: string;
   slug: string;
   platforms: PlatformData;
+  hasAccounts: boolean;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
@@ -79,6 +80,7 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, params})
         name: member.org.name,
         slug: member.org.slug,
         platforms: platformData,
+        hasAccounts: Object.keys(platformData).length > 0,
       }
       return {
         props: {
@@ -95,6 +97,20 @@ const OrgSettings = (props: OrgPostProps) => {
   const [content, setContent] = useState("");
   const [platform, setPlatform] = useState<PostPlatform>(Object.keys(props.platforms)[0] as PostPlatform);
   const [userId, setUserId] = useState(props.platforms[platform][0].userId);
+
+  if (!props.hasAccounts) {
+    return (
+        <>
+          <GlobalHead/>
+          <OrgLayout orgName={props.name} slug={props.slug} crumbs={[{name: "Post", path: "/post"}]}>
+            <div className="flex flex-col items-center justify-center w-full h-full">
+              <h1 className="text-2xl font-bold text-center">No accounts found</h1>
+              <p className="text-center">You need to add an account to post.</p>
+            </div>
+          </OrgLayout>
+        </>
+    )
+  }
 
   return (
       <>
