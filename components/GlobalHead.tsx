@@ -12,7 +12,7 @@ export function GlobalHead({
   noType?: boolean;
   noImage?: boolean;
 }) {
-  const image = "/logo.webp";
+  const image = "/logo.png";
 
   return (
       <Head>
