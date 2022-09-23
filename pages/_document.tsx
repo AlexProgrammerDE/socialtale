@@ -1,5 +1,4 @@
 import {Head, Html, Main, NextScript} from "next/document";
-import {twitter} from "../lib/branding";
 
 const themeInitializerScript = `
        (function () {
@@ -9,8 +8,10 @@ const themeInitializerScript = `
    `;
 
 export default function Document() {
+  // noinspection HtmlRequiredTitleElement
   return (
       <Html>
+        <Head/>
         <body id="documentBody">
         <script dangerouslySetInnerHTML={{__html: themeInitializerScript}}/>
         <Main/>
