@@ -1,5 +1,5 @@
 import Head from "next/head";
-import {color, description as brandDescription, title as brandTitle, url} from "../lib/branding";
+import {color, description as brandDescription, title as brandTitle, twitter, url} from "../lib/branding";
 
 export function GlobalHead({
                              title = brandTitle,
@@ -16,7 +16,16 @@ export function GlobalHead({
 
   return (
       <Head>
+        <meta charSet="utf-8"/>
+
         <title>{title}</title>
+
+        <link rel="manifest" href="/site.webmanifest"/>
+        <link rel="shortcut icon" href="/favicon.ico"/>
+
+        <meta name="format-detection" content="telephone=no"/>
+        <meta name="mobile-web-app-capable" content="yes"/>
+
         <meta name="twitter:title" content={title}/>
         <meta property="og:title" content={title}/>
 
@@ -25,6 +34,7 @@ export function GlobalHead({
         <meta property="og:description" content={description}/>
 
         {!noType && <meta property="og:type" content="website"/>}
+        <meta name="twitter:card" content="summary"/>
 
         <meta name="application-name" content={brandTitle}/>
         <meta property="og:site_name" content={brandTitle}/>
@@ -42,15 +52,14 @@ export function GlobalHead({
         <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png"/>
         <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png"/>
         <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png"/>
-        <link rel="manifest" href="/site.webmanifest"/>
-        <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#f15143"/>
-        <meta name="msapplication-TileColor" content={color}/>
+        <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color={color}/>
         <meta name="msapplication-TileImage" content="/favicons/mstile-144x144.png"/>
+
+        <meta name="twitter:creator" content={twitter}/>
 
         {!noImage && (
             <>
               <meta property="og:image" content={image}/>
-              <meta name="twitter:card" content="summary" />
               <meta name="twitter:image" content={image}/>
             </>
         )}
