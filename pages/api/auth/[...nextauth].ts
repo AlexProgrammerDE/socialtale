@@ -20,6 +20,9 @@ export const authOptions: NextAuthOptions = {
       user.user.name = user.user.email.split('@')[0]
     }
   },
+  session: {
+    strategy: 'jwt',
+  },
   adapter: {
     createSession(session) {
       return adapter.createSession(session);

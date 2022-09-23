@@ -26,69 +26,58 @@ type OrgPostProps = {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
-      const session = await unstable_getServerSession(req, res, authOptions)
+  const session = await unstable_getServerSession(req, res, authOptions)
+  const {slug} = params;
 
-      if (!session) {
-        return {
-          redirect: {
-            destination: '/',
-            permanent: false,
-          },
-        }
+  const member = await prisma.organizationMember.findFirst({
+    where: {
+      member: {
+        email: session.user.email,
+      },
+      org: {
+        slug: slug as string,
       }
-
-      const {slug} = params;
-
-      const member = await prisma.organizationMember.findFirst({
-        where: {
-          member: {
-            email: session.user.email,
-          },
-          org: {
-            slug: slug as string,
-          }
-        },
+    },
+    include: {
+      org: {
         include: {
-          org: {
+          members: {
             include: {
-              members: {
-                include: {
-                  member: true
-                }
-              },
-              twitterAccounts: true,
-              instagramAccounts: true,
-              facebookAccounts: true,
-              tiktokAccounts: true,
-              googleAccounts: true,
+              member: true
             }
           },
+          twitterAccounts: true,
+          instagramAccounts: true,
+          facebookAccounts: true,
+          tiktokAccounts: true,
+          googleAccounts: true,
         }
-      })
-
-      const platformData: PlatformData = {};
-
-      if (member.org.twitterAccounts.length > 0) {
-        platformData.twitter = member.org.twitterAccounts.map((account) => {
-          return {
-            userId: account.userId,
-          }
-        })
-      }
-
-      const data: OrgPostProps = {
-        name: member.org.name,
-        slug: member.org.slug,
-        platforms: platformData,
-        hasAccounts: Object.keys(platformData).length > 0,
-      }
-      return {
-        props: {
-          ...data
-        },
-      };
+      },
     }
-;
+  })
+
+  const platformData: PlatformData = {};
+
+  if (member.org.twitterAccounts.length > 0) {
+    platformData.twitter = member.org.twitterAccounts.map((account) => {
+      return {
+        userId: account.userId,
+      }
+    })
+  }
+
+  const data: OrgPostProps = {
+    name: member.org.name,
+    slug: member.org.slug,
+    platforms: platformData,
+    hasAccounts: Object.keys(platformData).length > 0,
+  }
+  return {
+    props: {
+      ...data
+    },
+  };
+};
 
 const OrgSettings = (props: OrgPostProps) => {
   if (!props.hasAccounts) {

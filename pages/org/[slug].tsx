@@ -21,16 +21,6 @@ type OrgDashboardProps = {
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
   const session = await unstable_getServerSession(req, res, authOptions)
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
-
   const {slug} = params;
 
   const member = await prisma.organizationMember.findFirst({
