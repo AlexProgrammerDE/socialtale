@@ -11,7 +11,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     switch (req.method.toUpperCase()) {
       case 'GET':
         const user = await prisma.user.findUnique({
-          where: {email: session.user.email},
+          where: {id: session.user.id},
         });
         const data: UserSettings = {
           name: user.name,
@@ -22,13 +22,13 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         break
       case 'DELETE':
         await prisma.user.delete({
-          where: {email: session.user.email},
+          where: {id: session.user.id},
         });
         res.send('OK')
         break
       case 'POST':
         await prisma.user.update({
-          where: {email: session.user.email},
+          where: {id: session.user.id},
           data: {
             name: req.body.name,
             emailNotifications: req.body.emailNotifications,

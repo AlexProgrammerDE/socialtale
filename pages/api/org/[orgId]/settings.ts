@@ -5,16 +5,14 @@ import {authOptions} from "../../auth/[...nextauth]";
 import {generateSlug, MAX_ORG_NAME_LENGTH, MIN_ORG_NAME_LENGTH} from "../../../../lib/shared";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-  const {slug} = req.query
+  const {orgId} = req.query
   const session = await unstable_getServerSession(req, res, authOptions)
 
   const orgMember = await prisma.organizationMember.findFirst({
     where: {
-      org: {
-        slug: slug as string
-      },
+      orgId: Number(orgId),
       member: {
-        email: session.user.email
+        id: session.user.id
       }
     }
   })
@@ -39,7 +37,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
         await prisma.organization.update({
           where: {
-            slug: slug as string,
+            id: Number(orgId),
           },
           data: {
             name: req.body.name,
@@ -56,7 +54,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
         await prisma.organization.delete({
           where: {
-            slug: slug as string,
+            id: Number(orgId),
           }
         })
         res.send('OK')

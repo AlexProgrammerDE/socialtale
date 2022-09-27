@@ -25,7 +25,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             slug: generateSlug(req.body.name),
             owner: {
               connect: {
-                email: session.user.email
+                id: session.user.id
               }
             }
           }
@@ -39,7 +39,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             },
             member: {
               connect: {
-                email: session.user.email
+                id: session.user.id
               }
             },
             role: 'OWNER'

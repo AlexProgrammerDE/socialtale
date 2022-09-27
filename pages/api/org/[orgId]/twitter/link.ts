@@ -6,8 +6,8 @@ import prisma from "../../../../../lib/prisma";
 
 const client = new TwitterApi({appKey: process.env.TWITTER_API_KEY, appSecret: process.env.TWITTER_API_SECRET});
 
-const googleHandler: NextApiHandler = async (req, res) => {
-  const {slug, userId} = req.query;
+const twitterHandler: NextApiHandler = async (req, res) => {
+  const {orgId} = req.query
   const session = await unstable_getServerSession(req, res, authOptions)
 
   if (!session) {
@@ -15,22 +15,17 @@ const googleHandler: NextApiHandler = async (req, res) => {
     return;
   }
 
-  if (!userId) {
-    res.status(400).json({message: "Missing callback token."});
-    return;
-  }
+  const authlink = await client.generateAuthLink(process.env.TWITTER_CALLBACK)
 
   const member = await prisma.organizationMember.findFirst({
     where: {
-      org: {
-        slug: slug as string,
-      },
+      orgId: Number(orgId),
       OR: [
         {role: "OWNER"},
         {role: "ADMIN"},
       ],
       member: {
-        email: session.user.email
+        id: session.user.id
       }
     }
   })
@@ -40,12 +35,18 @@ const googleHandler: NextApiHandler = async (req, res) => {
     return;
   }
 
-  await prisma.twitterOrgAccount.delete({
-    where: {
-      userId: userId as string,
-    }
+  await prisma.twitterFlow.create({
+    data: {
+      org: {
+        connect: {
+          id: Number(orgId),
+        }
+      },
+      oauthToken: authlink.oauth_token,
+      oauthTokenSecret: authlink.oauth_token_secret,
+    },
   })
 
-  res.send("OK");
+  res.redirect(authlink.url);
 }
-export default googleHandler;
+export default twitterHandler;

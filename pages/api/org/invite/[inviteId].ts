@@ -5,12 +5,12 @@ import {authOptions} from "../../auth/[...nextauth]";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const session = await unstable_getServerSession(req, res, authOptions)
-  const {id} = req.query
+  const {inviteId} = req.query
 
   if (session) {
     const invite = await prisma.organizationInvite.findUnique({
       where: {
-        id: id as string,
+        id: String(inviteId),
       },
       include: {
         org: true
@@ -27,7 +27,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             },
             member: {
               connect: {
-                email: session.user.email
+                id: session.user.id
               }
             },
             role: 'MEMBER'
@@ -35,7 +35,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         })
         await prisma.organizationInvite.delete({
           where: {
-            id: id as string,
+            id: String(inviteId),
           }
         })
         res.redirect(`/org/${invite.org.slug}`)
@@ -45,6 +45,6 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     }
     res.send('OK')
   } else {
-    res.redirect(`/api/auth/signin?callbackUrl=${encodeURIComponent(`${process.env.NEXTAUTH_URL}/api/org/invite/${id}`)}`)
+    res.redirect(`/api/auth/signin?callbackUrl=${encodeURIComponent(`${process.env.NEXTAUTH_URL}/api/org/invite/${inviteId}`)}`)
   }
 }

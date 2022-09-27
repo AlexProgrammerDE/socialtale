@@ -6,8 +6,8 @@ import prisma from "../../../../../lib/prisma";
 
 const client = new TwitterApi({appKey: process.env.TWITTER_API_KEY, appSecret: process.env.TWITTER_API_SECRET});
 
-const twitterHandler: NextApiHandler = async (req, res) => {
-  const {slug, userId} = req.query;
+const googleHandler: NextApiHandler = async (req, res) => {
+  const {orgId, userId} = req.query;
   const session = await unstable_getServerSession(req, res, authOptions)
 
   if (!session) {
@@ -22,15 +22,13 @@ const twitterHandler: NextApiHandler = async (req, res) => {
 
   const member = await prisma.organizationMember.findFirst({
     where: {
-      org: {
-        slug: slug as string,
-      },
+      orgId: Number(orgId),
       OR: [
         {role: "OWNER"},
         {role: "ADMIN"},
       ],
       member: {
-        email: session.user.email
+        id: session.user.id
       }
     }
   })
@@ -48,4 +46,4 @@ const twitterHandler: NextApiHandler = async (req, res) => {
 
   res.send("OK");
 }
-export default twitterHandler;
+export default googleHandler;

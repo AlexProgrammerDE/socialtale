@@ -5,26 +5,20 @@ import {authOptions} from "../../../auth/[...nextauth]";
 import {canControlUser, canSetRole} from "../../../../../lib/shared";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-  const {slug, id} = req.query
+  const {orgId, memberId} = req.query
   const session = await unstable_getServerSession(req, res, authOptions)
 
   const orgMember = await prisma.organizationMember.findFirst({
     where: {
-      org: {
-        slug: slug as string
-      },
-      member: {
-        email: session.user.email
-      }
+      orgId: Number(orgId),
+      memberId: session.user.id
     }
   })
 
   const targetMember = await prisma.organizationMember.findFirst({
     where: {
-      org: {
-        slug: slug as string
-      },
-      memberId: Number(id)
+      orgId: Number(orgId),
+      memberId: Number(memberId)
     }
   })
 
@@ -40,9 +34,9 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
           res.status(400).json({message: "You can't set this role"})
           return
         }
-        await prisma.organizationMember.updateMany({
+        await prisma.organizationMember.update({
           where: {
-            memberId: Number(id),
+            id: targetMember.id
           },
           data: {
             role: req.body.role,
@@ -56,9 +50,9 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
           return
         }
 
-        await prisma.organizationMember.deleteMany({
+        await prisma.organizationMember.delete({
           where: {
-            memberId: Number(id),
+            id: targetMember.id
           }
         })
         res.send('OK')

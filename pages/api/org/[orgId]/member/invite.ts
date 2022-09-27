@@ -7,16 +7,14 @@ import nodemailer from 'nodemailer'
 
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-  const {slug} = req.query
+  const {orgId} = req.query
   const session = await unstable_getServerSession(req, res, authOptions)
 
   const orgMember = await prisma.organizationMember.findFirst({
     where: {
-      org: {
-        slug: slug as string
-      },
+      orgId: Number(orgId),
       member: {
-        email: session.user.email
+        id: session.user.id
       }
     }
   })
@@ -33,7 +31,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
           data: {
             org: {
               connect: {
-                slug: slug as string
+                id: Number(orgId)
               }
             },
             email: req.body.email,

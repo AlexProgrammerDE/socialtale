@@ -25,9 +25,7 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, params})
 
   const member = await prisma.organizationMember.findFirst({
     where: {
-      member: {
-        email: session.user.email,
-      },
+      memberId: session.user.id,
       org: {
         slug: slug as string,
       }

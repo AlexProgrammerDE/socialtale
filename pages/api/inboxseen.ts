@@ -8,7 +8,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
   if (session) {
     const user = await prisma.user.findUnique({
-      where: {email: session.user.email},
+      where: {id: session.user.id},
       include: {
         messages: {
           where: {

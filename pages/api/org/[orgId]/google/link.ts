@@ -31,7 +31,7 @@ const authlink = createGoogleClient().generateAuthUrl({
 })
 
 const twitterHandler: NextApiHandler = async (req, res) => {
-  const {slug} = req.query;
+  const {orgId} = req.query;
   const session = await unstable_getServerSession(req, res, authOptions)
 
   if (!session) {
@@ -41,15 +41,13 @@ const twitterHandler: NextApiHandler = async (req, res) => {
 
   const member = await prisma.organizationMember.findFirst({
     where: {
-      org: {
-        slug: slug as string,
-      },
+      orgId: Number(orgId),
       OR: [
         {role: "OWNER"},
         {role: "ADMIN"},
       ],
       member: {
-        email: session.user.email
+        id: session.user.id
       }
     }
   })

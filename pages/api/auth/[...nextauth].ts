@@ -20,6 +20,14 @@ export const authOptions: NextAuthOptions = {
       user.user.name = user.user.email.split('@')[0]
     }
   },
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = Number(token.sub); // Prisma uses numbers for IDs
+      }
+      return session;
+    },
+  },
   session: {
     strategy: 'jwt',
   },

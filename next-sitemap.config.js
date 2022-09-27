@@ -1,4 +1,4 @@
 module.exports = {
-  siteUrl: "https://post.pistonmaster.net",
-  generateRobotsTxt: true
+    siteUrl: "https://post.pistonmaster.net",
+    generateRobotsTxt: true
 };

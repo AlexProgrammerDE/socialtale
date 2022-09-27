@@ -57,7 +57,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const members = await prisma.organizationMember.findMany({
     where: {
       member: {
-        email: session.user.email
+        id: session.user.id
       }
     },
     include: {

@@ -15,9 +15,7 @@ const googleHandler: NextApiHandler = async (req, res) => {
 
   const currentFlow = await prisma.googleFlow.findFirst({
     where: {
-      user: {
-        email: session.user.email
-      },
+      userId: session.user.id
     },
     include: {
       org: true

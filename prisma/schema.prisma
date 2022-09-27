@@ -177,6 +177,13 @@ model PinterestOrgAccount {
   orgId Int
 }
 
+model PinterestFlow {
+  id               Int          @id @default(autoincrement())
+  org              Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  orgId            Int
+  csrf             String       @unique
+}
+
 model GoogleOrgAccount {
   userId       String       @id
   org          Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)

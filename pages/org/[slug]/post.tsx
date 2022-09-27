@@ -31,9 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, params})
 
   const member = await prisma.organizationMember.findFirst({
     where: {
-      member: {
-        email: session.user.email,
-      },
+      memberId: session.user.id,
       org: {
         slug: slug as string,
       }
@@ -80,6 +78,13 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, params})
 };
 
 const OrgSettings = (props: OrgPostProps) => {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [content, setContent] = useState("");
+  const [platform, setPlatform] = useState<PostPlatform>(Object.keys(props.platforms)[0] as PostPlatform);
+  const [userId, setUserId] = useState(props.platforms[platform][0].userId);
+
   if (!props.hasAccounts) {
     return (
         <>
@@ -93,13 +98,6 @@ const OrgSettings = (props: OrgPostProps) => {
         </>
     )
   }
-
-  const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [content, setContent] = useState("");
-  const [platform, setPlatform] = useState<PostPlatform>(Object.keys(props.platforms)[0] as PostPlatform);
-  const [userId, setUserId] = useState(props.platforms[platform][0].userId);
 
   return (
       <>

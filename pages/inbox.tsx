@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const member = await prisma.user.findUnique({
     where: {
-      email: session.user.email
+      id: session.user.id
     },
     include: {
       messages: true
