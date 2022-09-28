@@ -1,6 +1,6 @@
 import type {NextPage} from "next";
-import {GlobalHead} from "../components/GlobalHead";
-import Layout from "../components/Layout";
+import {GlobalHead} from "components/GlobalHead";
+import Layout from "components/Layout";
 
 const Privacy: NextPage = () => {
   return (

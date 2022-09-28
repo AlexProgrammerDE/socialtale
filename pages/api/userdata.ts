@@ -1,9 +1,9 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import prisma from '../../lib/prisma'
-import {UIData} from "../../lib/responses";
+import prisma from 'lib/prisma'
+import {UIData} from "lib/responses";
 import gravatar from 'gravatar'
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from "./auth/[...nextauth]";
+import {authOptions} from "pages/api/auth/[...nextauth]";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const session = await unstable_getServerSession(req, res, authOptions)

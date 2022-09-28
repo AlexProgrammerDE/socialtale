@@ -1,9 +1,9 @@
 import {NextApiHandler} from "next";
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from '../../../auth/[...nextauth]'
-import prisma from "../../../../../lib/prisma";
+import {authOptions} from "pages/api/auth/[...nextauth]";
+import prisma from "lib/prisma";
 import {TwitterApi} from "twitter-api-v2";
-import {PostPlatform} from "../../../../../lib/shared";
+import {PostPlatform} from "lib/shared";
 
 const twitterHandler: NextApiHandler = async (req, res) => {
   const {orgId} = req.query

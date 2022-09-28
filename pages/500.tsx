@@ -1,5 +1,5 @@
-import {GlobalHead} from "../components/GlobalHead";
-import Layout from "../components/Layout";
+import {GlobalHead} from "components/GlobalHead";
+import Layout from "components/Layout";
 
 export default function Custom500() {
   return (

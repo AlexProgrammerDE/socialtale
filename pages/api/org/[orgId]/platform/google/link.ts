@@ -1,8 +1,8 @@
 import {NextApiHandler} from "next";
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from '../../../auth/[...nextauth]'
-import prisma from "../../../../../lib/prisma";
-import {createGoogleClient} from "../../../../../lib/google-client";
+import {authOptions} from "pages/api/auth/[...nextauth]";
+import prisma from "lib/prisma";
+import {createGoogleClient} from "lib/google-client";
 
 // generate a url that asks permissions for Blogger and Google Calendar scopes
 const scopes = [

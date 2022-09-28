@@ -1,6 +1,6 @@
 import {TwitterApi} from "twitter-api-v2";
 import {NextApiHandler} from "next";
-import prisma from "../../../lib/prisma";
+import prisma from "lib/prisma";
 
 const twitterHandler: NextApiHandler = async (req, res) => {
   const {oauth_token, oauth_verifier} = req.query;

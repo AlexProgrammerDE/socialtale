@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import {GetServerSideProps} from "next";
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from "../../api/auth/[...nextauth]";
-import prisma from "../../../lib/prisma";
-import {GlobalHead} from "../../../components/GlobalHead";
-import OrgLayout from "../../../components/OrgLayout";
+import {authOptions} from "pages/api/auth/[...nextauth]";
+import prisma from "lib/prisma";
+import {GlobalHead} from "components/GlobalHead";
+import OrgLayout from "components/OrgLayout";
 import {useRouter} from "next/router";
-import {generateSlug, MAX_ORG_NAME_LENGTH, MIN_ORG_NAME_LENGTH} from "../../../lib/shared";
+import {generateSlug, MAX_ORG_NAME_LENGTH, MIN_ORG_NAME_LENGTH} from "lib/shared";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 

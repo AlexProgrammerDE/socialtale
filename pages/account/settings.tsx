@@ -1,13 +1,13 @@
 import {useState} from "react";
-import {GlobalHead} from "../../components/GlobalHead";
-import Layout, {Theme} from "../../components/Layout";
+import {GlobalHead} from "components/GlobalHead";
+import Layout, {Theme} from "components/Layout";
 import {signOut} from "next-auth/react";
 import {useRouter} from "next/router";
 import {Theme as PrismaTheme} from "@prisma/client";
-import prisma from "../../lib/prisma";
+import prisma from "lib/prisma";
 import {GetServerSideProps} from "next";
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from "../api/auth/[...nextauth]";
+import {authOptions} from "pages/api/auth/[...nextauth]";
 
 interface ThemeData {
   name: string;

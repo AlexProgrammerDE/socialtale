@@ -1,7 +1,7 @@
 import type {NextPage} from "next";
 import Link from "next/link";
-import {GlobalHead} from "../components/GlobalHead";
-import Layout from "../components/Layout";
+import {GlobalHead} from "components/GlobalHead";
+import Layout from "components/Layout";
 
 const TOS: NextPage = () => {
   return (

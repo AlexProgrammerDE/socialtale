@@ -1,13 +1,13 @@
 import React from "react";
 import {GetServerSideProps} from "next";
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from "../api/auth/[...nextauth]";
-import prisma from "../../lib/prisma";
+import {authOptions} from "pages/api/auth/[...nextauth]";
+import prisma from "lib/prisma";
 import gravatar from "gravatar";
-import {GlobalHead} from "../../components/GlobalHead";
+import {GlobalHead} from "components/GlobalHead";
 import Masonry from "react-masonry-css";
-import {breakpointColumnsObj} from "../../lib/shared";
-import OrgLayout from "../../components/OrgLayout";
+import {breakpointColumnsObj} from "lib/shared";
+import OrgLayout from "components/OrgLayout";
 
 type OrgDashboardProps = {
   name: string;

@@ -1,12 +1,12 @@
 import {TwitterApi} from "twitter-api-v2";
 import {NextApiHandler} from "next";
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from '../../../auth/[...nextauth]'
-import prisma from "../../../../../lib/prisma";
+import {authOptions} from "pages/api/auth/[...nextauth]";
+import prisma from "lib/prisma";
 
 const client = new TwitterApi({appKey: process.env.TWITTER_API_KEY, appSecret: process.env.TWITTER_API_SECRET});
 
-const twitterHandler: NextApiHandler = async (req, res) => {
+const googleHandler: NextApiHandler = async (req, res) => {
   const {orgId, userId} = req.query;
   const session = await unstable_getServerSession(req, res, authOptions)
 
@@ -46,4 +46,4 @@ const twitterHandler: NextApiHandler = async (req, res) => {
 
   res.send("OK");
 }
-export default twitterHandler;
+export default googleHandler;

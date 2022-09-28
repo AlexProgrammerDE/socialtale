@@ -1,11 +1,11 @@
 import React from "react";
-import {GlobalHead} from "../components/GlobalHead";
-import Layout from "../components/Layout";
-import prisma from "../lib/prisma";
+import {GlobalHead} from "components/GlobalHead";
+import Layout from "components/Layout";
+import prisma from "lib/prisma";
 import {GetServerSideProps} from "next";
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from "./api/auth/[...nextauth]";
-import {breakpointColumnsObj} from "../lib/shared";
+import {authOptions} from "pages/api/auth/[...nextauth]";
+import {breakpointColumnsObj} from "lib/shared";
 import Masonry from "react-masonry-css";
 import Link from "next/link";
 

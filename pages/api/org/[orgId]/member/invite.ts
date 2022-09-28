@@ -1,10 +1,9 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import prisma from '../../../../../lib/prisma'
+import prisma from 'lib/prisma'
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from "../../../auth/[...nextauth]";
-import {canSetRole} from "../../../../../lib/shared";
+import {authOptions} from "pages/api/auth/[...nextauth]";
+import {canSetRole} from "lib/shared";
 import nodemailer from 'nodemailer'
-
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const {orgId} = req.query

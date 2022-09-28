@@ -1,5 +1,5 @@
 import Head from "next/head";
-import {color, description as brandDescription, title as brandTitle, twitter, url} from "../lib/branding";
+import {color, description as brandDescription, title as brandTitle, twitter, url} from "lib/branding";
 
 export function GlobalHead({
                              title = brandTitle,

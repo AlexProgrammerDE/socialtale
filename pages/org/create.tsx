@@ -1,12 +1,12 @@
 import {useState} from "react";
-import {GlobalHead} from "../../components/GlobalHead";
-import Layout from "../../components/Layout";
+import {GlobalHead} from "components/GlobalHead";
+import Layout from "components/Layout";
 import {useRouter} from "next/router";
-import prisma from "../../lib/prisma";
+import prisma from "lib/prisma";
 import {GetServerSideProps} from "next";
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from "../api/auth/[...nextauth]";
-import {generateSlug, MAX_ORG_NAME_LENGTH, MIN_ORG_NAME_LENGTH} from "../../lib/shared";
+import {authOptions} from "pages/api/auth/[...nextauth]";
+import {generateSlug, MAX_ORG_NAME_LENGTH, MIN_ORG_NAME_LENGTH} from "lib/shared";
 
 type OrgCreateProps = {
   canCreateOrg: boolean;

@@ -1,6 +1,6 @@
 import React from "react";
-import Layout from "../components/Layout";
-import {GlobalHead} from "../components/GlobalHead";
+import Layout from "components/Layout";
+import {GlobalHead} from "components/GlobalHead";
 
 const Animated = ({className}: { className: string }) =>
     <div className={"absolute header-animation rounded-2 bg-base-100 overflow-hidden mask " + className}>

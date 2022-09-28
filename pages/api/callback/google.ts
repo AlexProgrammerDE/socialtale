@@ -1,8 +1,8 @@
 import {NextApiHandler} from "next";
-import prisma from "../../../lib/prisma";
-import {createGoogleClient} from "../../../lib/google-client";
+import prisma from "lib/prisma";
+import {createGoogleClient} from "lib/google-client";
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from "../auth/[...nextauth]";
+import {authOptions} from "pages/api/auth/[...nextauth]";
 import {google} from "googleapis";
 
 const googleHandler: NextApiHandler = async (req, res) => {

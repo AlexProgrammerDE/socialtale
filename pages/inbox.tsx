@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
-import {GlobalHead} from "../components/GlobalHead";
-import Layout from "../components/Layout";
-import prisma from "../lib/prisma";
+import {GlobalHead} from "components/GlobalHead";
+import Layout from "components/Layout";
+import prisma from "lib/prisma";
 import {GetServerSideProps} from "next";
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "./api/auth/[...nextauth]";

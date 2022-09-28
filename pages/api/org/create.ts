@@ -1,8 +1,8 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import prisma from '../../../lib/prisma'
+import prisma from 'lib/prisma'
 import {unstable_getServerSession} from "next-auth";
-import {authOptions} from "../auth/[...nextauth]";
-import {generateSlug, MAX_ORG_NAME_LENGTH, MIN_ORG_NAME_LENGTH} from "../../../lib/shared";
+import {authOptions} from "pages/api/auth/[...nextauth]";
+import {generateSlug, MAX_ORG_NAME_LENGTH, MIN_ORG_NAME_LENGTH} from "lib/shared";
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const session = await unstable_getServerSession(req, res, authOptions)

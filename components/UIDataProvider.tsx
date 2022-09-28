@@ -1,7 +1,7 @@
 import {createContext, ReactNode} from "react";
 import {useSession} from "next-auth/react";
 import useSWR from "swr";
-import {UIData} from "../lib/responses";
+import {UIData} from "lib/responses";
 
 export const UIDataContext = createContext({
   user: null as unknown as UIData | undefined
