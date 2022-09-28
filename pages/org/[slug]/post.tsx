@@ -21,8 +21,7 @@ interface PlatformData {
 type OrgPostProps = {
   name: string;
   slug: string;
-  platforms: PlatformData;
-  hasAccounts: boolean;
+  platforms?: PlatformData;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({req, res, params}) => {
@@ -67,8 +66,7 @@ export const getServerSideProps: GetServerSideProps = async ({req, res, params})
   const data: OrgPostProps = {
     name: member.org.name,
     slug: member.org.slug,
-    platforms: platformData,
-    hasAccounts: Object.keys(platformData).length > 0,
+    platforms: Object.keys(platformData).length > 0 ? platformData : undefined,
   }
   return {
     props: {
@@ -82,10 +80,10 @@ const OrgSettings = (props: OrgPostProps) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
-  const [platform, setPlatform] = useState<PostPlatform>(Object.keys(props.platforms)[0] as PostPlatform);
-  const [userId, setUserId] = useState(props.platforms[platform][0].userId);
+  const [platform, setPlatform] = useState<PostPlatform>(props.platforms ? Object.keys(props.platforms)[0] as PostPlatform : undefined);
+  const [userId, setUserId] = useState(props.platforms ? props.platforms[platform][0].userId : undefined);
 
-  if (!props.hasAccounts) {
+  if (!props.platforms) {
     return (
         <>
           <GlobalHead/>
